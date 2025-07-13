@@ -80,9 +80,9 @@ services:
 ## Getting a Steam API Key
 
 1. Visit [Steam Web API](https://steamcommunity.com/dev)
-2. Fill out the form to request an API key
-3. Agree to the Steam API Terms of Use
-4. You'll receive your API key via email
+2. Log in to Steam
+3. Enter a domain, does not need to be valid
+4. You'll receive an API key that can be revoked from this page if you ever make a boo-boo
 
 ## Security Notes
 
@@ -102,4 +102,4 @@ The application reads configuration in this order (later values override earlier
 4. Environment Variables
 5. Command line arguments
 
-This means environment variables will always override values in appsettings.json, making them perfect for sensitive data like API keys. 
+This means environment variables will always override values in appsettings.json.
