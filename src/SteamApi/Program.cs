@@ -1,4 +1,5 @@
 using SteamApi.Configuration;
+using SteamApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,13 @@ if (string.IsNullOrEmpty(steamApiOptions?.ApiKey))
         "Steam API Key is required. Set it using User Secrets (development) or Environment Variables (production). " +
         "For development: dotnet user-secrets set \"SteamApi:ApiKey\" \"your-steam-api-key\"");
 }
+
+// Register Steam API services
+builder.Services.AddHttpClient<ISteamApiService, SteamApiService>(client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(steamApiOptions.TimeoutSeconds);
+    client.DefaultRequestHeaders.Add("User-Agent", "SteamApi-DotNet/1.0");
+});
 
 var app = builder.Build();
 

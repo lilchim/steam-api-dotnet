@@ -18,7 +18,7 @@
   - [ ] ITFItems_440 - Team Fortress 2 items (SKIPPED - not needed)
 - [x] Implement Steam API key configuration (appsettings.json, environment variables)
 - [x] Implement Status endpoint for checking web api configuration
-- [ ] Create base HTTP client for Steam API calls
+- [x] Create base HTTP client for Steam API calls
 - [ ] Implement error handling and retry logic
 - [ ] Add logging for API calls
 
