@@ -19,13 +19,15 @@
 - [x] Implement Steam API key configuration (appsettings.json, environment variables)
 - [x] Implement Status endpoint for checking web api configuration
 - [x] Create base HTTP client for Steam API calls
-- [ ] Implement error handling and retry logic
-- [ ] Add logging for API calls
+- [x] Implement error handling
+- [ ] Implement retry logic (using Polly or similar library)
+- [x] Add logging for API calls
 
 ### API Endpoints
-- [ ] Design REST API endpoints for your Steam API proxy
+- [x] Design REST API endpoints for your Steam API proxy
+- [x] Enable XML Document Generation for Swagger
 - [ ] Implement controllers for each Steam API interface:
-  - [ ] SteamNewsController - ISteamNews endpoints
+  - [x] SteamNewsController - ISteamNews endpoints
   - [ ] SteamUserStatsController - ISteamUserStats endpoints  
   - [ ] SteamUserController - ISteamUser endpoints
   - [ ] CustomController - Your own useful API methods
