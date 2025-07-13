@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F4DE3346-944E-4454-ABFE-CE7248D967E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamApi", "src\SteamApi\SteamApi.csproj", "{4F78C09B-61D3-4208-A876-C04677494610}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamApi.Models", "src\SteamApi.Models\SteamApi.Models.csproj", "{73266B1E-F1DA-4B59-AA1C-B5AFAFBC76C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamApi.Client", "src\SteamApi.Client\SteamApi.Client.csproj", "{2A75B8BC-B194-43CA-B1A1-025CF144DD52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F78C09B-61D3-4208-A876-C04677494610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F78C09B-61D3-4208-A876-C04677494610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F78C09B-61D3-4208-A876-C04677494610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F78C09B-61D3-4208-A876-C04677494610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73266B1E-F1DA-4B59-AA1C-B5AFAFBC76C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73266B1E-F1DA-4B59-AA1C-B5AFAFBC76C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73266B1E-F1DA-4B59-AA1C-B5AFAFBC76C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73266B1E-F1DA-4B59-AA1C-B5AFAFBC76C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A75B8BC-B194-43CA-B1A1-025CF144DD52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A75B8BC-B194-43CA-B1A1-025CF144DD52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A75B8BC-B194-43CA-B1A1-025CF144DD52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A75B8BC-B194-43CA-B1A1-025CF144DD52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4F78C09B-61D3-4208-A876-C04677494610} = {F4DE3346-944E-4454-ABFE-CE7248D967E2}
+		{73266B1E-F1DA-4B59-AA1C-B5AFAFBC76C4} = {F4DE3346-944E-4454-ABFE-CE7248D967E2}
+		{2A75B8BC-B194-43CA-B1A1-025CF144DD52} = {F4DE3346-944E-4454-ABFE-CE7248D967E2}
+	EndGlobalSection
+EndGlobal
