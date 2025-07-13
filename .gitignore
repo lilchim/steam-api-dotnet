@@ -1,0 +1,47 @@
+# .NET build artifacts
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+
+# User secrets (development)
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Docker
+.dockerignore
+
+# NuGet packages
+*.nupkg
+packages/
+
+# Test results
+TestResults/
+coverage/ 
