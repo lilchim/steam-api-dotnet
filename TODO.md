@@ -3,20 +3,19 @@
 ## Phase 1: Core API Foundation
 
 ### Project Structure Setup
-- [ ] Create solution file (`steam-api-dotnet.sln`)
-- [ ] Create `SteamApi.Models` class library project
-- [ ] Create `SteamApi.Client` class library project
-- [ ] Move existing models from `SteamApi` to `SteamApi.Models`
-- [ ] Add project references between projects
+- [x] Create solution file (`steam-api-dotnet.sln`)
+- [x] Create `SteamApi.Models` class library project
+- [x] Create `SteamApi.Client` class library project
+- [x] Move existing models from `SteamApi` to `SteamApi.Models`
+- [x] Add project references between projects
 
 ### Steam API Implementation
-- [ ] Research Steam Web API documentation and endpoints
-- [ ] Decide which Steam API endpoints to support initially
-  - [ ] User profiles
-  - [ ] Game libraries
-  - [ ] Achievements
-  - [ ] Game details
-  - [ ] Friends lists
+- [x] Research Steam Web API documentation and endpoints
+- [x] Decide which Steam API endpoints to support initially
+  - [x] ISteamNews - News feeds for Steam games
+  - [x] ISteamUserStats - Global stat information by game
+  - [x] ISteamUser - Information about Steam users
+  - [ ] ITFItems_440 - Team Fortress 2 items (SKIPPED - not needed)
 - [ ] Implement Steam API key configuration (appsettings.json, environment variables)
 - [ ] Create base HTTP client for Steam API calls
 - [ ] Implement error handling and retry logic
@@ -24,7 +23,11 @@
 
 ### API Endpoints
 - [ ] Design REST API endpoints for your Steam API proxy
-- [ ] Implement controllers for each endpoint group
+- [ ] Implement controllers for each Steam API interface:
+  - [ ] SteamNewsController - ISteamNews endpoints
+  - [ ] SteamUserStatsController - ISteamUserStats endpoints  
+  - [ ] SteamUserController - ISteamUser endpoints
+  - [ ] CustomController - Your own useful API methods
 - [ ] Add proper HTTP status codes and error responses
 - [ ] Implement request/response models
 - [ ] Add input validation
@@ -153,15 +156,46 @@
 
 ## Immediate Next Steps (Priority Order)
 
-1. **Research Steam Web API** - Understand available endpoints and data structures
-2. **Choose initial endpoints** - Pick 2-3 core endpoints to start with
-3. **Set up project structure** - Create the solution and project files
-4. **Implement basic Steam API client** - Get one endpoint working end-to-end
-5. **Design your API interface** - Plan how other services will consume your API
+1. **Set up project structure** - Create the solution and project files
+2. **Choose initial endpoints** - Pick 2-3 core endpoints to start with:
+   - [ ] ISteamUser/GetPlayerSummaries - Basic user profile info
+   - [ ] ISteamUserStats/GetGlobalAchievementPercentagesForApp - Achievement stats
+   - [ ] ISteamNews/GetNewsForApp - Game news feeds
+3. **Implement basic Steam API client** - Get one endpoint working end-to-end
+4. **Design your API interface** - Plan how other services will consume your API
+
+## Steam API Interface Details
+
+### ISteamUser
+- GetPlayerSummaries - Basic profile info (avatar, status, etc.)
+- GetFriendList - User's friends list
+- GetPlayerBans - VAC bans, game bans, etc.
+- GetUserGroupList - Groups user belongs to
+
+### ISteamUserStats  
+- GetGlobalAchievementPercentagesForApp - Achievement completion rates
+- GetGlobalStatsForGame - Global game statistics
+- GetNumberOfCurrentPlayers - Current player count
+- GetPlayerAchievements - User's achievements for a game
+- GetUserStatsForGame - User's stats for a game
+
+### ISteamNews
+- GetNewsForApp - News articles for a specific game
+- GetNewsForAppAuthed - News with additional features (requires API key)
+
+### Custom Controller Ideas
+- [ ] GetUserGameLibrary - Combine multiple Steam API calls
+- [ ] GetGameDetails - Enhanced game info with stats
+- [ ] GetUserActivity - Recent activity summary
+- [ ] GetPopularGames - Trending games based on player count
 
 ## Questions to Answer
 
-- [ ] Which Steam API endpoints are most important for your use case?
+- [x] Which Steam API endpoints are most important for your use case?
+  - [x] ISteamNews - News feeds for Steam games
+  - [x] ISteamUserStats - Global stat information by game  
+  - [x] ISteamUser - Information about Steam users
+  - [x] ITFItems_440 - Team Fortress 2 items (SKIPPED)
 - [ ] How do you want other services to authenticate to your API?
 - [ ] Do you need real-time data or is cached data acceptable?
 - [ ] What's your target audience? (Internal services only vs public API)
@@ -170,4 +204,3 @@
 
 ---
 
-**Note**: This TODO list can be updated as you make decisions and progress through the project. Each phase can be worked on in parallel to some extent.
