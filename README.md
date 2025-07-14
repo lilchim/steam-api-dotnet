@@ -417,6 +417,95 @@ GET /api/player/badge-progress/76561198000000000
 GET /api/player/badge-progress/76561198000000000?badgeId=1
 ```
 
+### Steam Apps (ISteamApps)
+
+Access Steam application information and server data.
+
+#### `GET /api/steamapps/list`
+Get a complete list of all Steam applications.
+
+**Example:**
+```bash
+# Get complete list of all Steam apps
+GET /api/steamapps/list
+```
+
+**Example Response:**
+```json
+{
+  "applist": {
+    "apps": [
+      {
+        "appid": 730,
+        "name": "Counter-Strike 2"
+      },
+      {
+        "appid": 570,
+        "name": "Dota 2"
+      }
+    ]
+  }
+}
+```
+
+#### `GET /api/steamapps/servers/{addr}`
+Get servers at a specific IP address.
+
+**Parameters:**
+- `addr` (path): IP address to query (IPv4 or IPv6)
+
+**Example:**
+```bash
+# Get servers at specific IP address
+GET /api/steamapps/servers/192.168.1.1
+
+# Get servers at IPv6 address
+GET /api/steamapps/servers/2001:db8::1
+```
+
+#### `GET /api/steamapps/up-to-date/{appId}`
+Check if a Steam app is up to date.
+
+**Parameters:**
+- `appId` (path): Steam App ID
+- `version` (query): Current version of the app
+
+**Example:**
+```bash
+# Check if Counter-Strike 2 is up to date
+GET /api/steamapps/up-to-date/730?version=12345
+```
+
+**Example Response:**
+```json
+{
+  "response": {
+    "up_to_date": true,
+    "version_is_listable": true,
+    "required_version": 12345,
+    "message": "App is up to date"
+  }
+}
+```
+
+#### `GET /api/steamapps/list/v2`
+Get Steam app list using version 2 of the API.
+
+**Example:**
+```bash
+# Get app list with v2 API
+GET /api/steamapps/list/v2
+```
+
+#### `GET /api/steamapps/list/v1`
+Get Steam app list using version 1 of the API.
+
+**Example:**
+```bash
+# Get app list with v1 API
+GET /api/steamapps/list/v1
+```
+
 ## Common Steam App IDs
 
 | Game | App ID |

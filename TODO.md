@@ -16,7 +16,7 @@
   - [x] ISteamUserStats - Global stat information by game
   - [x] ISteamUser - Information about Steam users
   - [x] IPlayerService - Player game library and profile data
-  - [ ] ISteamApps - Steam app information (NEXT)
+  - [x] ISteamApps - Steam app information
   - [ ] ITFItems_440 - Team Fortress 2 items (SKIPPED - not needed)
 - [x] Implement Steam API key configuration (appsettings.json, environment variables)
 - [x] Implement Status endpoint for checking web api configuration
@@ -33,8 +33,8 @@
   - [x] SteamUserStatsController - ISteamUserStats endpoints  
   - [x] SteamUserController - ISteamUser endpoints
   - [x] PlayerController - IPlayerService endpoints
-  - [ ] SteamAppsController - ISteamApps endpoints (NEXT)
-  - [ ] CustomController - Your own useful API methods
+  - [x] SteamAppsController - ISteamApps endpoints
+  - [ ] CustomController - Build out as needed
 - [ ] Add proper HTTP status codes and error responses
 - [ ] Implement request/response models
 - [ ] Add input validation
