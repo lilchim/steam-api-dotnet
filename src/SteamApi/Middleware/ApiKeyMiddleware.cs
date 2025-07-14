@@ -27,6 +27,13 @@ public class ApiKeyMiddleware
             return;
         }
 
+        // If API key is not required, skip validation
+        if (!_options.RequireApiKey)
+        {
+            await _next(context);
+            return;
+        }
+
         var apiKey = GetApiKey(context);
 
         if (string.IsNullOrEmpty(apiKey))
