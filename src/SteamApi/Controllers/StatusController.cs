@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using SteamApi.Configuration;
-using SteamApi.Models;
+using SteamApi.Models.Status;
 
 namespace SteamApi.Controllers;
 
