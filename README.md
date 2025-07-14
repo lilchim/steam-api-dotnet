@@ -305,6 +305,118 @@ GET /api/steamuser/resolve/valve?urlType=2
 }
 ```
 
+### Player Service (IPlayerService)
+
+Access user game libraries, playtime, levels, and badges.
+
+#### `GET /api/player/owned-games/{steamId}`
+Get a list of games a player owns along with playtime information.
+
+**Parameters:**
+- `steamId` (path): The SteamID of the account
+- `includeAppInfo` (query): Include game name and logo information (default: false)
+- `includePlayedFreeGames` (query): Include free games the player has played (default: false)
+- `appIdsFilter` (query): Comma-separated list of app IDs to filter results
+
+**Example:**
+```bash
+# Get basic owned games list
+GET /api/player/owned-games/76561198000000000
+
+# Get owned games with full app info
+GET /api/player/owned-games/76561198000000000?includeAppInfo=true
+
+# Get owned games including free games played
+GET /api/player/owned-games/76561198000000000?includeAppInfo=true&includePlayedFreeGames=true
+
+# Filter to specific games
+GET /api/player/owned-games/76561198000000000?appIdsFilter=730,570,440
+```
+
+**Example Response:**
+```json
+{
+  "response": {
+    "game_count": 150,
+    "games": [
+      {
+        "appid": 730,
+        "name": "Counter-Strike 2",
+        "playtime_forever": 1200,
+        "playtime_2weeks": 45,
+        "img_icon_url": "07385eb55b5ba974aebbe74d3c99626bda7920b8",
+        "has_community_visible_stats": true
+      }
+    ]
+  }
+}
+```
+
+#### `GET /api/player/recent-games/{steamId}`
+Get a list of games a player has played in the last two weeks.
+
+**Parameters:**
+- `steamId` (path): The SteamID of the account
+- `count` (query): Optionally limit to a certain number of games
+
+**Example:**
+```bash
+# Get all recently played games
+GET /api/player/recent-games/76561198000000000
+
+# Get last 5 recently played games
+GET /api/player/recent-games/76561198000000000?count=5
+```
+
+#### `GET /api/player/level/{steamId}`
+Get the Steam level of a user.
+
+**Parameters:**
+- `steamId` (path): The SteamID of the account
+
+**Example:**
+```bash
+# Get user's Steam level
+GET /api/player/level/76561198000000000
+```
+
+**Example Response:**
+```json
+{
+  "response": {
+    "player_level": 42
+  }
+}
+```
+
+#### `GET /api/player/badges/{steamId}`
+Get badges for a user.
+
+**Parameters:**
+- `steamId` (path): The SteamID of the account
+
+**Example:**
+```bash
+# Get user's badges
+GET /api/player/badges/76561198000000000
+```
+
+#### `GET /api/player/badge-progress/{steamId}`
+Get community badge progress for a user.
+
+**Parameters:**
+- `steamId` (path): The SteamID of the account
+- `badgeId` (query): The badge ID to get progress for (optional)
+
+**Example:**
+```bash
+# Get all badge progress
+GET /api/player/badge-progress/76561198000000000
+
+# Get specific badge progress
+GET /api/player/badge-progress/76561198000000000?badgeId=1
+```
+
 ## Common Steam App IDs
 
 | Game | App ID |
@@ -336,8 +448,8 @@ Error responses include descriptive messages to help with debugging.
 steam-api-dotnet/
 ├── src/
 │   ├── SteamApi/              # Main Web API project
-│   ├── SteamApi.Models/       # Shared models (future)
-│   └── SteamApi.Client/       # NuGet client package (future)
+│   ├── SteamApi.Models/       # Shared models 
+│   └── SteamApi.Client/       # NuGet client package 
 ├── docker/                    # Docker configuration
 └── docs/                      # Documentation
 ```
