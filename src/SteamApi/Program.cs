@@ -1,5 +1,6 @@
 using System.Reflection;
 using SteamApi.Configuration;
+using SteamApi.Middleware;
 using SteamApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,11 +21,39 @@ builder.Services.AddSwaggerGen(c =>
     {
         c.IncludeXmlComments(xmlPath);
     }
+    
+    // Add API key parameter to Swagger
+    c.AddSecurityDefinition("ApiKey", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Name = "X-API-Key",
+        Description = "API key for authentication"
+    });
+    
+    c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 // Configure Steam API options
 builder.Services.Configure<SteamApiOptions>(
     builder.Configuration.GetSection(SteamApiOptions.SectionName));
+
+// Configure API Key options
+builder.Services.Configure<ApiKeyOptions>(
+    builder.Configuration.GetSection(ApiKeyOptions.SectionName));
 
 // Validate Steam API configuration
 var steamApiOptions = builder.Configuration.GetSection(SteamApiOptions.SectionName).Get<SteamApiOptions>();
@@ -52,6 +81,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Add API key middleware
+app.UseMiddleware<ApiKeyMiddleware>();
 
 app.UseAuthorization();
 

@@ -35,9 +35,9 @@
   - [x] PlayerController - IPlayerService endpoints
   - [x] SteamAppsController - ISteamApps endpoints
   - [ ] CustomController - Build out as needed
-- [ ] Add proper HTTP status codes and error responses
-- [ ] Implement request/response models
-- [ ] Add input validation
+- [x] Add proper HTTP status codes and error responses
+- [x] Implement request/response models
+- [x] Add input validation
 
 ### Security & Configuration
 - [ ] Implement API key security (how clients authenticate to your API)
