@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SteamApi.Services;
+using SteamApi.Models.Steam.Responses;
 
 namespace SteamApi.Controllers;
 
@@ -26,10 +27,10 @@ public class SteamNewsController : ControllerBase
     /// <param name="tags">Comma-separated list of tags to filter by</param>
     /// <returns>News articles for the specified app</returns>
     [HttpGet("app/{appId}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<GameNewsResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetNewsForApp(
+    public async Task<ActionResult<SteamResponse<GameNewsResponse>>> GetNewsForApp(
         int appId,
         [FromQuery] int count = 20,
         [FromQuery] int maxLength = 0,
@@ -84,7 +85,8 @@ public class SteamNewsController : ControllerBase
     }
 
     /// <summary>
-    /// Get news articles for a specific Steam app with additional features (requires API key)
+    /// Get news articles for a specific Steam app with additional features.
+    /// Requires being logged in to Steam.
     /// </summary>
     /// <param name="appId">Steam App ID</param>
     /// <param name="count">Number of news items to return (max 20)</param>
@@ -95,10 +97,10 @@ public class SteamNewsController : ControllerBase
     /// <param name="days">Number of days to look back for news items</param>
     /// <returns>News articles for the specified app with additional features</returns>
     [HttpGet("app/{appId}/authed")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<GameNewsResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetNewsForAppAuthed(
+    public async Task<ActionResult<SteamResponse<GameNewsResponse>>> GetNewsForAppAuthed(
         int appId,
         [FromQuery] int count = 20,
         [FromQuery] int maxLength = 0,

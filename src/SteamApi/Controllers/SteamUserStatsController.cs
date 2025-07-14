@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SteamApi.Services;
+using SteamApi.Models.Steam.Responses;
 
 namespace SteamApi.Controllers;
 
@@ -22,10 +23,10 @@ public class SteamUserStatsController : ControllerBase
     /// <param name="gameId">Steam App ID</param>
     /// <returns>Global achievement completion percentages</returns>
     [HttpGet("achievements/{gameId}/global")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<AchievementPercentagesResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetGlobalAchievementPercentagesForApp(int gameId)
+    public async Task<ActionResult<SteamResponse<AchievementPercentagesResponse>>> GetGlobalAchievementPercentagesForApp(int gameId)
     {
         if (gameId <= 0)
         {

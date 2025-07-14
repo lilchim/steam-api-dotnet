@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SteamApi.Services;
+using SteamApi.Models.Steam.Responses;
+using SteamApi.Models.Steam.Player;
 
 namespace SteamApi.Controllers;
 
@@ -22,10 +24,10 @@ public class SteamUserController : ControllerBase
     /// <param name="steamIds">Comma-delimited list of 64-bit Steam IDs (up to 100)</param>
     /// <returns>Basic profile information for the specified users</returns>
     [HttpGet("summaries")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<PlayerSummariesResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetPlayerSummaries([FromQuery] string steamIds)
+    public async Task<ActionResult<SteamResponse<PlayerSummariesResponse>>> GetPlayerSummaries([FromQuery] string steamIds)
     {
         if (string.IsNullOrEmpty(steamIds))
         {
@@ -60,6 +62,8 @@ public class SteamUserController : ControllerBase
             var response = await _steamApi.GetAsync("ISteamUser", "GetPlayerSummaries", "v0002", 
                 new Dictionary<string, string> { ["steamids"] = steamIds });
             
+            // For now, return the raw response since we need to deserialize it properly
+            // TODO: Deserialize into strongly-typed models
             return Ok(response);
         }
         catch (Exception ex)
@@ -76,10 +80,10 @@ public class SteamUserController : ControllerBase
     /// <param name="relationship">Filter by relationship type (all, friend)</param>
     /// <returns>List of friends for the specified user</returns>
     [HttpGet("friends/{steamId}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<FriendListResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetFriendList(
+    public async Task<ActionResult<SteamResponse<FriendListResponse>>> GetFriendList(
         string steamId,
         [FromQuery] string relationship = "all")
     {
@@ -125,10 +129,10 @@ public class SteamUserController : ControllerBase
     /// <param name="steamIds">Comma-delimited list of 64-bit Steam IDs</param>
     /// <returns>Ban information for the specified users</returns>
     [HttpGet("bans")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<PlayerBansResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetPlayerBans([FromQuery] string steamIds)
+    public async Task<ActionResult<SteamResponse<PlayerBansResponse>>> GetPlayerBans([FromQuery] string steamIds)
     {
         if (string.IsNullOrEmpty(steamIds))
         {

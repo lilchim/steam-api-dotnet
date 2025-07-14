@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SteamApi.Services;
+using SteamApi.Models.Steam.Responses;
 
 namespace SteamApi.Controllers;
 
@@ -21,9 +22,9 @@ public class SteamAppsController : ControllerBase
     /// </summary>
     /// <returns>Complete list of all Steam apps with their IDs and names</returns>
     [HttpGet("list")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<AppListResponse>), 200)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetAppList()
+    public async Task<ActionResult<SteamResponse<AppListResponse>>> GetAppList()
     {
         try
         {
