@@ -602,5 +602,37 @@ This project uses a simple API Key authentication middleware to secure API endpo
 - Rotate and revoke API keys as needed.
 - For advanced scenarios, integrate with your user management/auth service to generate and manage API keys per user.
 
+## CORS Configuration
+
+Cross-Origin Resource Sharing (CORS) is configurable via `appsettings.json` to control which domains can access your API.
+
+### Configuration Options
+- **Enabled**: Enable/disable CORS globally
+- **AllowedOrigins**: List of domains that can access the API
+- **AllowedMethods**: HTTP methods allowed (GET, POST, etc.)
+- **AllowedHeaders**: Headers that can be sent with requests
+- **AllowCredentials**: Whether to allow cookies/authorization headers
+- **PreflightMaxAge**: How long to cache preflight requests
+
+### Example Configuration
+```json
+{
+  "Cors": {
+    "Enabled": true,
+    "AllowedOrigins": [
+      "http://localhost:3000",
+      "https://yourdomain.com"
+    ],
+    "AllowedMethods": ["GET", "POST", "OPTIONS"],
+    "AllowedHeaders": ["Content-Type", "X-API-Key"],
+    "AllowCredentials": false
+  }
+}
+```
+
+### Development vs Production
+- **Development**: CORS is enabled by default with common localhost origins
+- **Production**: CORS is disabled by default - enable and configure specific origins as needed
+
 ---
 

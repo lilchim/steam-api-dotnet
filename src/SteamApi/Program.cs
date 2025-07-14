@@ -55,6 +55,10 @@ builder.Services.Configure<SteamApiOptions>(
 builder.Services.Configure<ApiKeyOptions>(
     builder.Configuration.GetSection(ApiKeyOptions.SectionName));
 
+// Configure CORS options
+builder.Services.Configure<CorsOptions>(
+    builder.Configuration.GetSection(CorsOptions.SectionName));
+
 // Validate Steam API configuration
 var steamApiOptions = builder.Configuration.GetSection(SteamApiOptions.SectionName).Get<SteamApiOptions>();
 if (string.IsNullOrEmpty(steamApiOptions?.ApiKey))
@@ -81,6 +85,42 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Configure CORS
+var corsOptions = builder.Configuration.GetSection(CorsOptions.SectionName).Get<CorsOptions>();
+if (corsOptions?.Enabled == true)
+{
+    app.UseCors(builder =>
+    {
+        var corsBuilder = builder
+            .WithMethods(corsOptions.AllowedMethods.ToArray())
+            .WithHeaders(corsOptions.AllowedHeaders.ToArray());
+
+        if (corsOptions.AllowedOrigins.Any())
+        {
+            corsBuilder.WithOrigins(corsOptions.AllowedOrigins.ToArray());
+        }
+        else
+        {
+            corsBuilder.AllowAnyOrigin();
+        }
+
+        if (corsOptions.AllowCredentials)
+        {
+            corsBuilder.AllowCredentials();
+        }
+
+        if (corsOptions.PreflightMaxAge > 0)
+        {
+            corsBuilder.SetPreflightMaxAge(TimeSpan.FromSeconds(corsOptions.PreflightMaxAge));
+        }
+
+        if (corsOptions.ExposedHeaders.Any())
+        {
+            corsBuilder.WithExposedHeaders(corsOptions.ExposedHeaders.ToArray());
+        }
+    });
+}
 
 // Add API key middleware
 app.UseMiddleware<ApiKeyMiddleware>();

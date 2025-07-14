@@ -11,15 +11,18 @@ public class StatusController : ControllerBase
 {
     private readonly SteamApiOptions _steamOptions;
     private readonly ApiKeyOptions _apiKeyOptions;
+    private readonly CorsOptions _corsOptions;
     private readonly ILogger<StatusController> _logger;
 
     public StatusController(
         IOptions<SteamApiOptions> steamOptions, 
         IOptions<ApiKeyOptions> apiKeyOptions,
+        IOptions<CorsOptions> corsOptions,
         ILogger<StatusController> logger)
     {
         _steamOptions = steamOptions.Value;
         _apiKeyOptions = apiKeyOptions.Value;
+        _corsOptions = corsOptions.Value;
         _logger = logger;
     }
 
@@ -38,6 +41,7 @@ public class StatusController : ControllerBase
             SteamApiKeyConfigured = !string.IsNullOrEmpty(_steamOptions.ApiKey),
             ApiKeyAuthEnabled = _apiKeyOptions.RequireApiKey,
             RateLimitEnabled = _apiKeyOptions.RateLimit.Enabled,
+            CorsEnabled = _corsOptions.Enabled,
             BaseUrl = _steamOptions.BaseUrl,
             TimeoutSeconds = _steamOptions.TimeoutSeconds,
             MaxRetries = _steamOptions.MaxRetries,

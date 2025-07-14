@@ -18,6 +18,11 @@ public class StatusResponse
     public bool RateLimitEnabled { get; set; }
     
     /// <summary>
+    /// Whether CORS is enabled
+    /// </summary>
+    public bool CorsEnabled { get; set; }
+    
+    /// <summary>
     /// Base URL for Steam Web API
     /// </summary>
     public string BaseUrl { get; set; } = string.Empty;
