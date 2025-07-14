@@ -8,13 +8,13 @@
     <!-- NuGet Package Configuration -->
     <PackageId>SteamApi.Models</PackageId>
     <Version>1.0.0</Version>
-    <Authors>Your Name</Authors>
-    <Company>Your Company</Company>
+    <Authors>Alex Case</Authors>
+    <Company>https://github.com/lilchim/</Company>
     <Description>Data transfer objects (DTOs) for Steam Web API responses</Description>
     <PackageTags>steam;api;models;dto;gaming</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <RepositoryUrl>https://github.com/yourusername/steam-api-dotnet</RepositoryUrl>
+    <RepositoryUrl>https://github.com/lilchim/steam-api-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     
     <!-- Generate XML documentation -->
