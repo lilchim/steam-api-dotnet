@@ -185,6 +185,126 @@ Get user statistics for a specific game.
 GET /api/steamuserstats/stats/76561198000000000/730
 ```
 
+### Steam User (ISteamUser)
+
+Access user profiles, friends, bans, and group information.
+
+#### `GET /api/steamuser/summaries`
+Get basic profile information for multiple Steam users.
+
+**Parameters:**
+- `steamIds` (query): Comma-delimited list of 64-bit Steam IDs (up to 100)
+
+**Example:**
+```bash
+# Get profiles for multiple users
+GET /api/steamuser/summaries?steamIds=76561198000000000,76561198000000001
+
+# Get single user profile
+GET /api/steamuser/summaries?steamIds=76561198000000000
+```
+
+**Example Response:**
+```json
+{
+  "response": {
+    "players": [
+      {
+        "steamid": "76561198000000000",
+        "personaname": "PlayerName",
+        "profileurl": "https://steamcommunity.com/profiles/76561198000000000",
+        "avatar": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/...",
+        "personastate": 1,
+        "communityvisibilitystate": 3
+      }
+    ]
+  }
+}
+```
+
+#### `GET /api/steamuser/friends/{steamId}`
+Get the friend list of a Steam user.
+
+**Parameters:**
+- `steamId` (path): 64-bit Steam ID
+- `relationship` (query): Filter by relationship type (all, friend, default: all)
+
+**Example:**
+```bash
+# Get all friends
+GET /api/steamuser/friends/76561198000000000
+
+# Get only confirmed friends
+GET /api/steamuser/friends/76561198000000000?relationship=friend
+```
+
+#### `GET /api/steamuser/bans`
+Get ban information for multiple Steam users.
+
+**Parameters:**
+- `steamIds` (query): Comma-delimited list of 64-bit Steam IDs
+
+**Example:**
+```bash
+# Check bans for multiple users
+GET /api/steamuser/bans?steamIds=76561198000000000,76561198000000001
+```
+
+**Example Response:**
+```json
+{
+  "players": [
+    {
+      "SteamId": "76561198000000000",
+      "CommunityBanned": false,
+      "VACBanned": false,
+      "NumberOfVACBans": 0,
+      "DaysSinceLastBan": 0,
+      "NumberOfGameBans": 0,
+      "EconomyBan": "none"
+    }
+  ]
+}
+```
+
+#### `GET /api/steamuser/groups/{steamId}`
+Get the groups that a Steam user is a member of.
+
+**Parameters:**
+- `steamId` (path): 64-bit Steam ID
+
+**Example:**
+```bash
+# Get user's groups
+GET /api/steamuser/groups/76561198000000000
+```
+
+#### `GET /api/steamuser/resolve/{vanityUrl}`
+Resolve a vanity URL to a Steam ID.
+
+**Parameters:**
+- `vanityUrl` (path): The vanity URL to resolve
+- `urlType` (query): Type of vanity URL (1 for individual profile, 2 for group, default: 1)
+
+**Example:**
+```bash
+# Resolve individual profile
+GET /api/steamuser/resolve/gabelogannewell
+
+# Resolve group
+GET /api/steamuser/resolve/valve?urlType=2
+```
+
+**Example Response:**
+```json
+{
+  "response": {
+    "steamid": "76561197960435530",
+    "success": 1
+  }
+}
+```
+
 ## Common Steam App IDs
 
 | Game | App ID |

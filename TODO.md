@@ -29,7 +29,7 @@
 - [ ] Implement controllers for each Steam API interface:
   - [x] SteamNewsController - ISteamNews endpoints
   - [x] SteamUserStatsController - ISteamUserStats endpoints  
-  - [ ] SteamUserController - ISteamUser endpoints
+  - [x] SteamUserController - ISteamUser endpoints
   - [ ] CustomController - Your own useful API methods
 - [ ] Add proper HTTP status codes and error responses
 - [ ] Implement request/response models
