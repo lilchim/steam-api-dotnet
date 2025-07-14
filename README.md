@@ -564,3 +564,43 @@ steam-api-dotnet/
 
 This project is open source and available under the [MIT License](LICENSE).
 
+## API Key Authentication Middleware
+
+This project uses a simple API Key authentication middleware to secure API endpoints.
+
+### How It Works
+- All API requests (except `/api/status`, `/api/status/health`, and `/swagger`) require a valid API key.
+- The API key must be provided in the `X-API-Key` header (default) or as a `api_key` query parameter.
+- Requests without a valid API key will receive a `401 Unauthorized` response.
+- Rate limiting is enforced per API key (configurable).
+
+### Configuration
+- **API keys are NOT stored in source code or committed to Git.**
+- API keys are configured via [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets) (for development) or environment variables (for production).
+- Example User Secrets setup:
+  ```sh
+  dotnet user-secrets set "ApiKey:ValidApiKeys:0" "your-dev-key"
+  dotnet user-secrets set "ApiKey:ValidApiKeys:1" "another-key"
+  ```
+- To require API key authentication in development, set `"RequireApiKey": true` in `appsettings.Development.json`.
+- Rate limiting and header/query parameter names are configurable in `appsettings.json`.
+
+### Using the API Key
+- Add your API key to the `X-API-Key` header in requests:
+  ```http
+  X-API-Key: your-dev-key
+  ```
+- Or as a query parameter:
+  ```
+  GET /api/steamuser/summaries?steamIds=...&api_key=your-dev-key
+  ```
+- In Swagger UI, use the "Authorize" button and enter your API key.
+
+### Security Best Practices
+- **Never commit API keys to source control.**
+- Use environment variables or a secrets manager in production.
+- Rotate and revoke API keys as needed.
+- For advanced scenarios, integrate with your user management/auth service to generate and manage API keys per user.
+
+---
+
