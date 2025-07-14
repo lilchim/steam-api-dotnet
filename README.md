@@ -10,6 +10,7 @@ A .NET implementation of the Steam Web API that provides a clean, secure interfa
 - 🔄 **RESTful Interface** - Clean REST endpoints for all Steam API methods
 - 📊 **Status Monitoring** - Built-in health checks and configuration status
 - 🛡️ **Error Handling** - Robust error handling and logging
+- 📦 **NuGet Packages** - Reusable models and client libraries
 
 ## Quick Start
 
@@ -41,6 +42,36 @@ Visit [Steam Web API](https://steamcommunity.com/dev/apikey) to request an API k
 
 ### Configuration
 A Steam API Key should be added using secrets to avoid accidentally committing to a public repository. Refer to [API_KEY_SETUP.md](API_KEY_SETUP.md) for detailed setup instructions.
+
+## NuGet Packages
+
+### SteamApi.Models
+Strongly-typed data transfer objects (DTOs) for Steam Web API responses.
+
+```bash
+dotnet add package SteamApi.Models
+```
+
+```csharp
+using SteamApi.Models.Steam.Player;
+using SteamApi.Models.Steam.Responses;
+
+// Use the models in your code
+var player = new PlayerSummary
+{
+    SteamId = 76561198000000000,
+    PersonaName = "PlayerName"
+};
+```
+
+**Features:**
+- Player information (profiles, friends, bans, owned games)
+- Game information (news, achievements, app lists)
+- Response wrappers for all Steam API endpoints
+- Full XML documentation and IntelliSense support
+- Nullable reference types for proper null handling
+
+See the [SteamApi.Models README](src/SteamApi.Models/README.md) for complete documentation.
 
 ## API Documentation
 
