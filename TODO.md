@@ -28,7 +28,7 @@
 - [x] Enable XML Document Generation for Swagger
 - [ ] Implement controllers for each Steam API interface:
   - [x] SteamNewsController - ISteamNews endpoints
-  - [ ] SteamUserStatsController - ISteamUserStats endpoints  
+  - [x] SteamUserStatsController - ISteamUserStats endpoints  
   - [ ] SteamUserController - ISteamUser endpoints
   - [ ] CustomController - Your own useful API methods
 - [ ] Add proper HTTP status codes and error responses
