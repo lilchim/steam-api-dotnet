@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SteamApi.Services;
+using SteamApi.Models.Steam.Responses;
 
 namespace SteamApi.Controllers;
 
@@ -25,10 +26,10 @@ public class PlayerController : ControllerBase
     /// <param name="appIdsFilter">Comma-separated list of app IDs to filter the results</param>
     /// <returns>List of owned games with playtime information</returns>
     [HttpGet("owned-games/{steamId}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<OwnedGamesResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetOwnedGames(
+    public async Task<ActionResult<SteamResponse<OwnedGamesResponse>>> GetOwnedGames(
         string steamId,
         [FromQuery] bool includeAppInfo = false,
         [FromQuery] bool includePlayedFreeGames = false,
@@ -87,10 +88,10 @@ public class PlayerController : ControllerBase
     /// <param name="count">Optionally limit to a certain number of games</param>
     /// <returns>List of recently played games with playtime information</returns>
     [HttpGet("recent-games/{steamId}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(SteamResponse<RecentlyPlayedGamesResponse>), 200)]
     [ProducesResponseType(400)]
     [ProducesResponseType(500)]
-    public async Task<IActionResult> GetRecentlyPlayedGames(
+    public async Task<ActionResult<SteamResponse<RecentlyPlayedGamesResponse>>> GetRecentlyPlayedGames(
         string steamId,
         [FromQuery] int? count = null)
     {
