@@ -9,12 +9,17 @@ namespace SteamApi.Controllers;
 [Route("api/[controller]")]
 public class StatusController : ControllerBase
 {
-    private readonly SteamApiOptions _options;
+    private readonly SteamApiOptions _steamOptions;
+    private readonly ApiKeyOptions _apiKeyOptions;
     private readonly ILogger<StatusController> _logger;
 
-    public StatusController(IOptions<SteamApiOptions> options, ILogger<StatusController> logger)
+    public StatusController(
+        IOptions<SteamApiOptions> steamOptions, 
+        IOptions<ApiKeyOptions> apiKeyOptions,
+        ILogger<StatusController> logger)
     {
-        _options = options.Value;
+        _steamOptions = steamOptions.Value;
+        _apiKeyOptions = apiKeyOptions.Value;
         _logger = logger;
     }
 
@@ -30,11 +35,13 @@ public class StatusController : ControllerBase
         
         var response = new StatusResponse
         {
-            ApiKeyConfigured = !string.IsNullOrEmpty(_options.ApiKey),
-            BaseUrl = _options.BaseUrl,
-            TimeoutSeconds = _options.TimeoutSeconds,
-            MaxRetries = _options.MaxRetries,
-            EnableLogging = _options.EnableLogging,
+            SteamApiKeyConfigured = !string.IsNullOrEmpty(_steamOptions.ApiKey),
+            ApiKeyAuthEnabled = _apiKeyOptions.RequireApiKey,
+            RateLimitEnabled = _apiKeyOptions.RateLimit.Enabled,
+            BaseUrl = _steamOptions.BaseUrl,
+            TimeoutSeconds = _steamOptions.TimeoutSeconds,
+            MaxRetries = _steamOptions.MaxRetries,
+            EnableLogging = _steamOptions.EnableLogging,
             Version = GetApplicationVersion(),
             Timestamp = DateTime.UtcNow,
             Status = "Healthy"

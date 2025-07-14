@@ -5,7 +5,17 @@ public class StatusResponse
     /// <summary>
     /// Whether the Steam API key is configured
     /// </summary>
-    public bool ApiKeyConfigured { get; set; }
+    public bool SteamApiKeyConfigured { get; set; }
+    
+    /// <summary>
+    /// Whether API key authentication is enabled
+    /// </summary>
+    public bool ApiKeyAuthEnabled { get; set; }
+    
+    /// <summary>
+    /// Whether rate limiting is enabled
+    /// </summary>
+    public bool RateLimitEnabled { get; set; }
     
     /// <summary>
     /// Base URL for Steam Web API
