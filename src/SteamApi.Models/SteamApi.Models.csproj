@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     
     <!-- NuGet Package Configuration -->
-    <PackageId>Sgnome.SteamApi.Models</PackageId>
-    <Version>1.0.0</Version>
+    <PackageId>SteamApi.Models</PackageId>
+    <Version>1.0.1</Version>
     <Authors>Alex Case</Authors>
     <Company>https://github.com/lilchim/</Company>
     <Description>Data transfer objects (DTOs) for Steam Web API responses</Description>

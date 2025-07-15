@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
     
     <!-- NuGet Package Configuration -->
-    <PackageId>Sgnome.SteamApi.Client</PackageId>
-    <Version>1.0.0</Version>
+    <PackageId>SteamApi.Client</PackageId>
+    <Version>1.0.1</Version>
     <Authors>Alex Case</Authors>
     <Company>https://github.com/lilchim</Company>
     <Description>Client library for Steam API .NET service</Description>
