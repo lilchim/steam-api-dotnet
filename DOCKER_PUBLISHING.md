@@ -27,7 +27,7 @@ This guide explains how to publish Docker images to Docker Hub using GitHub Acti
 ### 2. Add Docker Hub Credentials to GitHub Secrets
 
 1. **Go to your GitHub repository**
-   - Navigate to your `steam-api-dotnet` repo
+   - Navigate to your repo
 
 2. **Add repository secrets**:
    - Go to **Settings** → **Secrets and variables** → **Actions**
