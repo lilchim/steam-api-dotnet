@@ -1,0 +1,41 @@
+name: Publish NuGet Packages
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+        
+    - name: Restore dependencies
+      run: dotnet restore
+      
+    - name: Build
+      run: dotnet build --no-restore --configuration Release
+      
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      
+    - name: Pack SteamApi.Models
+      run: dotnet pack src/SteamApi.Models/SteamApi.Models.csproj --configuration Release --no-build --output nupkgs
+      
+    - name: Pack SteamApi.Client
+      run: dotnet pack src/SteamApi.Client/SteamApi.Client.csproj --configuration Release --no-build --output nupkgs
+      
+    - name: Publish SteamApi.Models to NuGet
+      run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      if: contains(github.event.release.body, 'SteamApi.Models') || contains(github.event.release.body, 'all')
+      
+    - name: Publish SteamApi.Client to NuGet
+      run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+      if: contains(github.event.release.body, 'SteamApi.Client') || contains(github.event.release.body, 'all') 
