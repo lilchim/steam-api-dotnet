@@ -13,7 +13,7 @@ This package provides strongly-typed models for working with Steam Web API respo
 ## Installation
 
 ```bash
-dotnet add package SteamApi.Models
+dotnet add package Sgnome.SteamApi.Models
 ```
 
 ## Usage

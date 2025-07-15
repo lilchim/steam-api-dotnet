@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     
     <!-- NuGet Package Configuration -->
-    <PackageId>SteamApi.Models</PackageId>
+    <PackageId>Sgnome.SteamApi.Models</PackageId>
     <Version>1.0.0</Version>
     <Authors>Alex Case</Authors>
     <Company>https://github.com/lilchim/</Company>

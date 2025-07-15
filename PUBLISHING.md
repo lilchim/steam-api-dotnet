@@ -27,7 +27,7 @@ This guide explains how to publish the SteamApi packages to nuget.org using GitH
    - Click **Releases** → **Create a new release**
    - Tag version: `v1.0.0` (or whatever version)
    - Title: `Release v1.0.0`
-   - Description: Include `SteamApi.Client` or `SteamApi.Models` to specify which packages to publish
+   - Description: Include `Sgnome.SteamApi.Client` or `Sgnome.SteamApi.Models` to specify which packages to publish
    - Click **Publish release**
 
 2. **GitHub Actions will automatically**:
@@ -44,8 +44,8 @@ dotnet pack src/SteamApi.Client/SteamApi.Client.csproj --configuration Release
 dotnet pack src/SteamApi.Models/SteamApi.Models.csproj --configuration Release
 
 # Publish to NuGet
-dotnet nuget push src/SteamApi.Client/bin/Release/SteamApi.Client.1.0.0.nupkg --api-key YOUR_API_KEY --source https://api.nuget.org/v3/index.json
-dotnet nuget push src/SteamApi.Models/bin/Release/SteamApi.Models.1.0.0.nupkg --api-key YOUR_API_KEY --source https://api.nuget.org/v3/index.json
+dotnet nuget push src/SteamApi.Client/bin/Release/Sgnome.SteamApi.Client.1.0.0.nupkg --api-key YOUR_API_KEY --source https://api.nuget.org/v3/index.json
+dotnet nuget push src/SteamApi.Models/bin/Release/Sgnome.SteamApi.Models.1.0.0.nupkg --api-key YOUR_API_KEY --source https://api.nuget.org/v3/index.json
 ```
 
 ## Version Management

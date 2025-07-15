@@ -32,10 +32,10 @@ jobs:
     - name: Pack SteamApi.Client
       run: dotnet pack src/SteamApi.Client/SteamApi.Client.csproj --configuration Release --no-build --output nupkgs
       
-    - name: Publish SteamApi.Models to NuGet
+    - name: Publish Sgnome.SteamApi.Models to NuGet
       run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-      if: contains(github.event.release.body, 'SteamApi.Models') || contains(github.event.release.body, 'all')
+      if: contains(github.event.release.body, 'Sgnome.SteamApi.Models') || contains(github.event.release.body, 'all')
       
-    - name: Publish SteamApi.Client to NuGet
+    - name: Publish Sgnome.SteamApi.Client to NuGet
       run: dotnet nuget push nupkgs/*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
-      if: contains(github.event.release.body, 'SteamApi.Client') || contains(github.event.release.body, 'all') 
+      if: contains(github.event.release.body, 'Sgnome.SteamApi.Client') || contains(github.event.release.body, 'all') 

@@ -15,7 +15,7 @@ This package provides a strongly-typed HTTP client for interacting with the Stea
 ## Installation
 
 ```bash
-dotnet add package SteamApi.Client
+dotnet add package Sgnome.SteamApi.Client
 ```
 
 ## Quick Start
