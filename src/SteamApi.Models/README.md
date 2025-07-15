@@ -9,14 +9,17 @@ This package provides strongly-typed models for working with Steam Web API respo
 - **Player Information**: User profiles, friends, bans, owned games
 - **Game Information**: News, achievements, app lists
 - **Response Wrappers**: Standardized response structures
+- **Status Information**: API health and configuration status
 
 ## Installation
 
 ```bash
-dotnet add package Sgnome.SteamApi.Models
+dotnet add package SteamApi.Models
 ```
 
 ## Usage
+
+These models are designed to work with the Steam Web API responses. They can be used independently or with the [SteamApi.Client](https://www.nuget.org/packages/SteamApi.Client) package.
 
 ### Player Models
 
@@ -123,7 +126,18 @@ var response = new SteamResponse<PlayerSummariesResponse>
 - **XML Documentation**: Full IntelliSense support with XML documentation
 - **Nullable Reference Types**: Proper null handling with nullable reference types
 - **Steam API Compatible**: Models match Steam Web API response structures
-- **Cross-Platform**: Works on .NET 6+ on any platform
+- **Cross-Platform**: Works on .NET 8+ on any platform
+- **No Dependencies**: Zero external dependencies for maximum compatibility
+
+## Related Packages
+
+- **[SteamApi.Client](https://www.nuget.org/packages/SteamApi.Client)** - HTTP client that uses these models
+- **[Steam API Service](https://github.com/lilchim/steam-api-dotnet)** - The .NET service that returns these models
+
+## Source Code
+
+- **[GitHub Repository](https://github.com/lilchim/steam-api-dotnet)** - Main repository
+- **[GitLab Repository](https://gitlab.com/lilchim/steam-api-dotnet)** - Mirror repository
 
 ## License
 

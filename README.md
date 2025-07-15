@@ -1,6 +1,6 @@
 # Steam API .NET
 
-A .NET implementation of the Steam Web API that provides a clean, secure interface for accessing Steam data. This service acts as a proxy to the official Steam Web API, handling authentication and providing a consistent REST interface.
+A .NET 8 implementation of the Steam Web API that provides a clean, secure interface for accessing Steam data. This service acts as a proxy to the official Steam Web API, handling authentication and providing a consistent REST interface.
 
 ## Features
 
@@ -21,11 +21,29 @@ cd docker
 docker-compose up --build
 ```
 
+**Note:** You'll need to set the `STEAM_API_KEY` environment variable or add it to your `.env` file:
+
+```bash
+# Create .env file in docker directory
+echo "STEAM_API_KEY=your-steam-api-key" > docker/.env
+
+# Then run
+cd docker
+docker-compose up --build
+```
+
 ### Option 2: Using Docker directly
 
 ```bash
+# Build the image
 docker build -f docker/steamapi.dockerfile -t steamapi .
-docker run -p 5000:80 steamapi
+
+# Run with API key
+docker run -p 5000:80 -e "SteamApi__ApiKey=your-steam-api-key" steamapi
+
+# Or pull from Docker Hub
+docker pull lilchim/steam-api-dotnet:latest
+docker run -p 5000:80 -e "SteamApi__ApiKey=your-steam-api-key" lilchim/steam-api-dotnet:latest
 ```
 
 ### Option 3: Local Development
@@ -70,8 +88,57 @@ var player = new PlayerSummary
 - Response wrappers for all Steam API endpoints
 - Full XML documentation and IntelliSense support
 - Nullable reference types for proper null handling
+- Zero external dependencies for maximum compatibility
 
 See the [SteamApi.Models README](src/SteamApi.Models/README.md) for complete documentation.
+
+### SteamApi.Client
+HTTP client library for easy integration with the Steam API service.
+
+```bash
+dotnet add package SteamApi.Client
+```
+
+```csharp
+using SteamApi.Client;
+using SteamApi.Client.Extensions;
+
+// Register the client
+services.AddSteamApiClient(options =>
+{
+    options.BaseUrl = "https://your-steam-api.com";
+    options.ApiKey = "your-api-key";
+});
+
+// Use the client
+public class MyService
+{
+    private readonly ISteamApiClient _steamClient;
+
+    public MyService(ISteamApiClient steamClient)
+    {
+        _steamClient = steamClient;
+    }
+
+    public async Task GetPlayerInfo()
+    {
+        var playerSummaries = await _steamClient.GetPlayerSummariesAsync("76561198000000000");
+        var player = playerSummaries.Response?.Players.FirstOrDefault();
+        
+        Console.WriteLine($"Player: {player?.PersonaName}");
+    }
+}
+```
+
+**Features:**
+- Type-safe API calls with strongly-typed models
+- Dependency injection support
+- Configurable options (timeouts, logging, etc.)
+- Built-in error handling and logging
+- Cancellation token support
+- Docker container integration
+
+See the [SteamApi.Client README](src/SteamApi.Client/README.md) for complete documentation.
 
 ## API Documentation
 
@@ -568,11 +635,23 @@ Error responses include descriptive messages to help with debugging.
 steam-api-dotnet/
 ├── src/
 │   ├── SteamApi/              # Main Web API project
-│   ├── SteamApi.Models/       # Shared models 
-│   └── SteamApi.Client/       # NuGet client package 
+│   ├── SteamApi.Models/       # Shared models (NuGet package)
+│   └── SteamApi.Client/       # HTTP client library (NuGet package)
 ├── docker/                    # Docker configuration
+├── .github/workflows/         # CI/CD pipelines
+│   ├── build.yml             # Build and test workflow
+│   ├── publish.yml           # NuGet publishing workflow
+│   └── docker-publish.yml    # Docker publishing workflow
 └── docs/                      # Documentation
 ```
+
+### Technology Stack
+- **.NET 8** - Latest LTS version
+- **ASP.NET Core** - Web API framework
+- **Docker** - Containerization
+- **GitHub Actions** - CI/CD automation
+- **NuGet** - Package distribution
+- **Swagger/OpenAPI** - API documentation
 
 ### Adding New Endpoints
 
@@ -590,6 +669,27 @@ steam-api-dotnet/
 4. Add tests if applicable
 5. Update documentation
 6. Submit a pull request
+
+## Status
+
+This project is **production-ready** with:
+- ✅ Complete Steam API implementation
+- ✅ Published NuGet packages ([SteamApi.Models](https://www.nuget.org/packages/SteamApi.Models), [SteamApi.Client](https://www.nuget.org/packages/SteamApi.Client))
+- ✅ Docker containerization ([lilchim/steam-api-dotnet](https://hub.docker.com/r/lilchim/steam-api-dotnet))
+- ✅ Automated CI/CD pipeline
+- ✅ Comprehensive documentation
+- ✅ API key authentication and security
+- ✅ CORS configuration
+- ✅ Health checks and monitoring
+
+## Links
+
+- **GitHub Repository**: https://github.com/lilchim/steam-api-dotnet
+- **GitLab Repository**: https://gitlab.com/lilchim/steam-api-dotnet
+- **NuGet Packages**: 
+  - [SteamApi.Models](https://www.nuget.org/packages/SteamApi.Models)
+  - [SteamApi.Client](https://www.nuget.org/packages/SteamApi.Client)
+- **Docker Hub**: [lilchim/steam-api-dotnet](https://hub.docker.com/r/lilchim/steam-api-dotnet)
 
 ## License
 

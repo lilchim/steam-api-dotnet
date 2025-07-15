@@ -6,16 +6,17 @@ Client library for Steam API .NET service.
 
 This package provides a strongly-typed HTTP client for interacting with the Steam API .NET service. It includes:
 
-- **Type-safe API calls** - All methods return strongly-typed models
+- **Type-safe API calls** - All methods return strongly-typed models from [SteamApi.Models](https://www.nuget.org/packages/SteamApi.Models)
 - **Dependency injection support** - Easy integration with .NET applications
 - **Configurable options** - Customize base URL, timeouts, API keys, and more
 - **Logging support** - Built-in request/response logging
 - **Cancellation support** - All methods support cancellation tokens
+- **Docker support** - Works with the [Docker container](https://hub.docker.com/r/lilchim/steam-api-dotnet)
 
 ## Installation
 
 ```bash
-dotnet add package Sgnome.SteamApi.Client
+dotnet add package SteamApi.Client
 ```
 
 ## Quick Start
@@ -51,6 +52,23 @@ public class MyService
         Console.WriteLine($"Player: {player?.PersonaName}");
     }
 }
+```
+
+### Using with Docker
+
+If you're running the Steam API service in Docker:
+
+```csharp
+services.AddSteamApiClient(options =>
+{
+    options.BaseUrl = "http://localhost:5000"; // Docker container port
+    options.ApiKey = "your-api-key";
+});
+```
+
+```bash
+# Run the Docker container
+docker run -p 5000:80 -e "SteamApi__ApiKey=your-api-key" lilchim/steam-api-dotnet:latest
 ```
 
 ### Configuration from appsettings.json
@@ -122,9 +140,9 @@ Console.WriteLine($"API Status: {status.Status}");
 | `BaseUrl` | string | "http://localhost:5000" | Base URL of the Steam API service |
 | `ApiKey` | string? | null | API key for authentication |
 | `TimeoutSeconds` | int | 30 | HTTP request timeout in seconds |
-| `MaxRetries` | int | 3 | Maximum number of retry attempts |
+| `MaxRetries` | int | 3 | Maximum number of retry attempts (planned for future releases) |
 | `EnableLogging` | bool | false | Whether to enable request/response logging |
-| `UserAgent` | string | "SteamApi.Client/1.0.0" | User agent string for HTTP requests |
+| `UserAgent` | string | "SteamApi.Client/1.0.1" | User agent string for HTTP requests |
 | `Cache` | CacheOptions | new() | Cache configuration |
 
 ### CacheOptions
@@ -135,6 +153,8 @@ Console.WriteLine($"API Status: {status.Status}");
 | `Type` | CacheType | Memory | Cache type to use |
 | `DefaultTtlMinutes` | int | 15 | Default time-to-live for cached items |
 | `RedisConnectionString` | string? | null | Redis connection string |
+
+> **Note**: Caching functionality is planned for future releases. The cache options are currently available for configuration but not yet implemented.
 
 ## Error Handling
 
@@ -173,10 +193,22 @@ services.AddSteamApiClient(options =>
 
 ## Dependencies
 
-- **SteamApi.Models** - Data transfer objects
+- **[SteamApi.Models](https://www.nuget.org/packages/SteamApi.Models)** - Data transfer objects
 - **Microsoft.Extensions.Http** - HTTP client factory
 - **Microsoft.Extensions.Options** - Configuration options
 - **Microsoft.Extensions.Logging.Abstractions** - Logging support
+- **Microsoft.Extensions.Configuration** - Configuration binding
+- **Microsoft.Extensions.Configuration.Binder** - Configuration binding support
+
+## Related Packages
+
+- **[SteamApi.Models](https://www.nuget.org/packages/SteamApi.Models)** - Data transfer objects used by this client
+- **[Steam API Service](https://github.com/lilchim/steam-api-dotnet)** - The .NET service that this client connects to
+- **[Docker Image](https://hub.docker.com/r/lilchim/steam-api-dotnet)** - Docker container for the Steam API service
+
+## Source Code
+
+- **[GitHub Repository](https://github.com/lilchim/steam-api-dotnet)** - Main repository
 
 ## License
 
