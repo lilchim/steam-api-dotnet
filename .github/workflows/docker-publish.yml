@@ -4,7 +4,7 @@ on:
   release:
     types: [published]
   push:
-    branches: [ main ]
+    branches: [ main, develop ]
     paths:
       - 'src/SteamApi/**'
       - 'docker/**'
@@ -27,25 +27,21 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         
-    - name: Extract metadata
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ secrets.DOCKERHUB_USERNAME }}/steam-api-dotnet
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=sha,prefix={{branch}}-
-          
+    - name: Determine tags
+      id: tags
+      run: |
+        if [[ "${{ github.event_name }}" == "release" ]]; then
+          echo "tags=${{ secrets.DOCKERHUB_USERNAME }}/steam-api-dotnet:${{ github.event.release.tag_name }},${{ secrets.DOCKERHUB_USERNAME }}/steam-api-dotnet:latest" >> $GITHUB_OUTPUT
+        else
+          echo "tags=${{ secrets.DOCKERHUB_USERNAME }}/steam-api-dotnet:${{ github.ref_name }},${{ secrets.DOCKERHUB_USERNAME }}/steam-api-dotnet:latest" >> $GITHUB_OUTPUT
+        fi
+        
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: ./docker/steamapi.dockerfile
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.tags.outputs.tags }}
         cache-from: type=gha
         cache-to: type=gha,mode=max 
