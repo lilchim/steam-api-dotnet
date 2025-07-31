@@ -32,6 +32,48 @@ public class OwnedGame
     public int PlaytimeForever { get; set; }
     
     /// <summary>
+    /// The total number of minutes played on Windows
+    /// </summary>
+    [JsonPropertyName("playtime_windows_forever")]
+    public int PlaytimeWindowsForever { get; set; }
+    
+    /// <summary>
+    /// The total number of minutes played on Mac
+    /// </summary>
+    [JsonPropertyName("playtime_mac_forever")]
+    public int PlaytimeMacForever { get; set; }
+    
+    /// <summary>
+    /// The total number of minutes played on Linux
+    /// </summary>
+    [JsonPropertyName("playtime_linux_forever")]
+    public int PlaytimeLinuxForever { get; set; }
+    
+    /// <summary>
+    /// The total number of minutes played on Steam Deck
+    /// </summary>
+    [JsonPropertyName("playtime_deck_forever")]
+    public int PlaytimeDeckForever { get; set; }
+    
+    /// <summary>
+    /// The time the game was last played (Unix timestamp)
+    /// </summary>
+    [JsonPropertyName("rtime_last_played")]
+    public long RtimeLastPlayed { get; set; }
+    
+    /// <summary>
+    /// Content descriptor IDs for the game
+    /// </summary>
+    [JsonPropertyName("content_descriptorids")]
+    public List<int> ContentDescriptorIds { get; set; } = new();
+    
+    /// <summary>
+    /// The total number of minutes played while disconnected
+    /// </summary>
+    [JsonPropertyName("playtime_disconnected")]
+    public int PlaytimeDisconnected { get; set; }
+    
+    /// <summary>
     /// The icon URL for the game
     /// </summary>
     [JsonPropertyName("img_icon_url")]
