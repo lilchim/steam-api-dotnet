@@ -8,7 +8,7 @@ public class PlayerBans
     /// <summary>
     /// 64-bit Steam ID of the user
     /// </summary>
-    public ulong SteamId { get; set; }
+    public string SteamId { get; set; } = string.Empty;
     
     /// <summary>
     /// Whether the user is banned from Steam Community

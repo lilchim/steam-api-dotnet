@@ -11,7 +11,7 @@ public class PlayerSummary
     /// 64-bit Steam ID of the user
     /// </summary>
     [JsonPropertyName("steamid")]
-    public ulong SteamId { get; set; }
+    public string SteamId { get; set; } = string.Empty;
     
     /// <summary>
     /// The player's persona name (display name)

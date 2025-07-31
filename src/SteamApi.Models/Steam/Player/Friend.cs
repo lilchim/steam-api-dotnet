@@ -8,7 +8,7 @@ public class Friend
     /// <summary>
     /// 64-bit Steam ID of the friend
     /// </summary>
-    public ulong SteamId { get; set; }
+    public string SteamId { get; set; } = string.Empty;
     
     /// <summary>
     /// The relationship between the user and this friend
