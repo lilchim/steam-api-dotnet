@@ -46,7 +46,7 @@ public class RecentlyPlayedGame
     public bool HasLeaderboards { get; set; }
     
     /// <summary>
-    /// The last time the game was played
+    /// The last time the game was played (Unix timestamp)
     /// </summary>
-    public DateTime? LastPlayed { get; set; }
+    public ulong LastPlayed { get; set; }
 } 

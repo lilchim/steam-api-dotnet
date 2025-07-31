@@ -16,7 +16,7 @@ public class Friend
     public string Relationship { get; set; } = string.Empty;
     
     /// <summary>
-    /// When the friend was added to the user's friend list
+    /// When the friend was added to the user's friend list (Unix timestamp)
     /// </summary>
-    public DateTime FriendSince { get; set; }
+    public ulong FriendSince { get; set; }
 } 

@@ -62,10 +62,10 @@ public class PlayerSummary
     public string? PrimaryClanId { get; set; }
     
     /// <summary>
-    /// The time the player was last online
+    /// The time the player was last online (Unix timestamp)
     /// </summary>
     [JsonPropertyName("lastlogoff")]
-    public DateTime? LastLogoff { get; set; }
+    public ulong LastLogoff { get; set; }
     
     /// <summary>
     /// If set, indicates the profile is currently in the requested visibility state
@@ -98,10 +98,10 @@ public class PlayerSummary
     public string? GameServerIp { get; set; }
     
     /// <summary>
-    /// The time the player's account was created
+    /// The time the player's account was created (Unix timestamp)
     /// </summary>
     [JsonPropertyName("timecreated")]
-    public DateTime? TimeCreated { get; set; }
+    public ulong TimeCreated { get; set; }
     
     /// <summary>
     /// The player's Steam Community ban status

@@ -41,7 +41,7 @@ public class Achievement
     public double GlobalPercentage { get; set; }
     
     /// <summary>
-    /// When the achievement was unlocked (if achieved)
+    /// When the achievement was unlocked (if achieved) (Unix timestamp)
     /// </summary>
-    public DateTime? UnlockTime { get; set; }
+    public ulong UnlockTime { get; set; }
 } 
