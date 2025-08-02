@@ -15,6 +15,11 @@ public class SteamApiOptions
     public string BaseUrl { get; set; } = "https://api.steampowered.com";
     
     /// <summary>
+    /// Base URL for Steam Store API. Defaults to https://store.steampowered.com/api
+    /// </summary>
+    public string StoreBaseUrl { get; set; } = "https://store.steampowered.com/api";
+    
+    /// <summary>
     /// Request timeout in seconds. Defaults to 30 seconds.
     /// </summary>
     public int TimeoutSeconds { get; set; } = 30;

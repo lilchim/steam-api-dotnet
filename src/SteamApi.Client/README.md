@@ -123,6 +123,23 @@ var achievements = await client.GetGlobalAchievementPercentagesForAppAsync(730);
 var apps = await client.GetAppListAsync();
 ```
 
+### Store Information
+
+```csharp
+// Get store details for a single app
+var appDetails = await client.GetStoreAppDetailsAsync(238960); // Path of Exile
+
+// Get store details for multiple apps
+var multipleAppDetails = await client.GetStoreAppDetailsMultipleAsync("238960,730,440"); // Path of Exile, CS2, TF2
+
+// Access store information
+var app = appDetails["238960"];
+Console.WriteLine($"App: {app.Data?.Name}");
+Console.WriteLine($"Type: {app.Data?.Type}");
+Console.WriteLine($"Is Free: {app.Data?.IsFree}");
+Console.WriteLine($"Developers: {string.Join(", ", app.Data?.Developers ?? new List<string>())}");
+```
+
 ### Status
 
 ```csharp

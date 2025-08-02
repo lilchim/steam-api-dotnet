@@ -1,4 +1,5 @@
 using SteamApi.Models.Steam.Responses;
+using SteamApi.Models.Steam.Store;
 using SteamApi.Models.Status;
 
 namespace SteamApi.Client;
@@ -96,4 +97,20 @@ public interface ISteamApiClient
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Complete list of all Steam apps with their IDs and names</returns>
     Task<SteamResponse<AppListResponse>> GetAppListAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get detailed information about a Steam app from the store
+    /// </summary>
+    /// <param name="appId">Steam App ID</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Detailed app information from the Steam store</returns>
+    Task<Dictionary<string, StoreAppDetailsResponse>> GetStoreAppDetailsAsync(int appId, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Get detailed information about multiple Steam apps from the store
+    /// </summary>
+    /// <param name="appIds">Comma-separated list of Steam App IDs</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Detailed app information from the Steam store</returns>
+    Task<Dictionary<string, StoreAppDetailsResponse>> GetStoreAppDetailsMultipleAsync(string appIds, CancellationToken cancellationToken = default);
 } 

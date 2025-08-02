@@ -91,6 +91,61 @@ public class SteamApiService : ISteamApiService
         }
     }
 
+    public async Task<string> GetStoreAsync(string endpoint, Dictionary<string, string>? parameters = null)
+    {
+        var url = BuildStoreApiUrl(endpoint, parameters);
+        
+        if (_options.EnableLogging)
+        {
+            _logger.LogInformation("Making Steam Store API request to: {Url}", url);
+        }
+
+        try
+        {
+            var response = await _httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+            
+            var content = await response.Content.ReadAsStringAsync();
+            
+            if (_options.EnableLogging)
+            {
+                _logger.LogInformation("Steam Store API response received successfully");
+            }
+            
+            return content;
+        }
+        catch (HttpRequestException ex)
+        {
+            _logger.LogError(ex, "HTTP request failed for Steam Store API call: {Endpoint}", endpoint);
+            throw new SteamApiException($"Steam Store API request failed: {ex.Message}", ex);
+        }
+        catch (TaskCanceledException ex)
+        {
+            _logger.LogError(ex, "Steam Store API request timed out: {Endpoint}", endpoint);
+            throw new SteamApiException("Steam Store API request timed out", ex);
+        }
+    }
+
+    public async Task<T> GetStoreAsync<T>(string endpoint, Dictionary<string, string>? parameters = null)
+    {
+        var jsonResponse = await GetStoreAsync(endpoint, parameters);
+        
+        try
+        {
+            var result = JsonSerializer.Deserialize<T>(jsonResponse, _jsonOptions);
+            if (result == null)
+            {
+                throw new SteamApiException("Failed to deserialize Steam Store API response");
+            }
+            return result;
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogError(ex, "Failed to deserialize Steam Store API response for {Endpoint}", endpoint);
+            throw new SteamApiException("Failed to deserialize Steam Store API response", ex);
+        }
+    }
+
     private string BuildSteamApiUrl(string interfaceName, string methodName, string version, Dictionary<string, string>? parameters)
     {
         // Steam API URL format: http://api.steampowered.com/<interface>/<method>/<version>/?key=<api_key>&format=json&<other_params>
@@ -111,6 +166,24 @@ public class SteamApiService : ISteamApiService
         }
 
         return $"{url}?{string.Join("&", queryParams)}";
+    }
+
+    private string BuildStoreApiUrl(string endpoint, Dictionary<string, string>? parameters)
+    {
+        // Steam Store API URL format: https://store.steampowered.com/api/<endpoint>?<params>
+        var url = $"{_options.StoreBaseUrl.TrimEnd('/')}/{endpoint}";
+        
+        var queryParams = new List<string>();
+
+        if (parameters != null)
+        {
+            foreach (var param in parameters)
+            {
+                queryParams.Add($"{Uri.EscapeDataString(param.Key)}={Uri.EscapeDataString(param.Value)}");
+            }
+        }
+
+        return queryParams.Count > 0 ? $"{url}?{string.Join("&", queryParams)}" : url;
     }
 }
 

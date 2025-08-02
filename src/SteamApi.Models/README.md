@@ -8,6 +8,7 @@ This package provides strongly-typed models for working with Steam Web API respo
 
 - **Player Information**: User profiles, friends, bans, owned games
 - **Game Information**: News, achievements, app lists
+- **Store Information**: App details, requirements, screenshots, movies
 - **Response Wrappers**: Standardized response structures
 - **Status Information**: API health and configuration status
 
@@ -30,16 +31,18 @@ using SteamApi.Models.Steam.Responses;
 // Player summary information
 var player = new PlayerSummary
 {
-    SteamId = 76561198000000000,
+    SteamId = "76561198000000000",
     PersonaName = "PlayerName",
     ProfileUrl = "https://steamcommunity.com/profiles/76561198000000000",
-    Status = PlayerStatus.Online
+    Status = PlayerStatus.Online,
+    LastLogoff = 1640995200, // Unix timestamp
+    TimeCreated = 1640995200  // Unix timestamp
 };
 
 // Player ban information
 var bans = new PlayerBans
 {
-    SteamId = 76561198000000000,
+    SteamId = "76561198000000000",
     VacBanned = false,
     NumberOfVacBans = 0,
     CommunityBanned = false
@@ -69,7 +72,45 @@ var achievement = new Achievement
     Name = "Achievement Display Name",
     Description = "Achievement description",
     Achieved = true,
-    GlobalPercentage = 15.5
+    GlobalPercentage = 15.5,
+    UnlockTime = 1640995200 // Unix timestamp
+};
+```
+
+### Store Models
+
+```csharp
+using SteamApi.Models.Steam.Store;
+
+// Store app details
+var appDetails = new StoreAppDetails
+{
+    Type = "game",
+    Name = "Path of Exile",
+    SteamAppId = 238960,
+    IsFree = true,
+    ControllerSupport = "full",
+    DetailedDescription = "Chris Wilson...",
+    ShortDescription = "Path of Exile is an online Action RPG...",
+    HeaderImage = "https://shared.akamai.steamstatic.com/...",
+    Website = "http://www.pathofexile.com",
+    Developers = new List<string> { "Grinding Gear Games" },
+    Publishers = new List<string> { "Grinding Gear Games" }
+};
+
+// Store requirements
+var requirements = new StoreRequirements
+{
+    Minimum = "<strong>Minimum:</strong><br>...",
+    Recommended = "<strong>Recommended:</strong><br>..."
+};
+
+// Store platforms
+var platforms = new StorePlatforms
+{
+    Windows = true,
+    Mac = true,
+    Linux = false
 };
 ```
 
@@ -85,8 +126,8 @@ var response = new SteamResponse<PlayerSummariesResponse>
     {
         Players = new List<PlayerSummary>
         {
-            new PlayerSummary { SteamId = 76561198000000000, PersonaName = "Player1" },
-            new PlayerSummary { SteamId = 76561198000000001, PersonaName = "Player2" }
+            new PlayerSummary { SteamId = "76561198000000000", PersonaName = "Player1" },
+            new PlayerSummary { SteamId = "76561198000000001", PersonaName = "Player2" }
         }
     }
 };
@@ -105,6 +146,24 @@ var response = new SteamResponse<PlayerSummariesResponse>
 - `GameNews` - Game news articles
 - `Achievement` - Game achievement information
 - `SteamApp` - Basic Steam application information
+
+### Store Models (`SteamApi.Models.Steam.Store`)
+- `StoreAppDetails` - Detailed app information from Steam store
+- `StoreAppDetailsResponse` - Store API response wrapper
+- `StoreRequirements` - System requirements for different platforms
+- `StorePlatforms` - Supported platforms information
+- `StorePackageGroup` - Package and subscription information
+- `StoreSubscription` - Individual subscription details
+- `StoreMetacritic` - Metacritic review information
+- `StoreCategory` - App categories
+- `StoreGenre` - App genres
+- `StoreScreenshot` - App screenshots
+- `StoreMovie` - App videos and trailers
+- `StoreAchievements` - App achievements information
+- `StoreReleaseDate` - Release date information
+- `StoreSupportInfo` - Support contact information
+- `StoreContentDescriptors` - Content rating information
+- `StoreRating` - Regional rating information
 
 ### Response Models (`SteamApi.Models.Steam.Responses`)
 - `SteamResponse<T>` - Generic response wrapper
@@ -126,6 +185,7 @@ var response = new SteamResponse<PlayerSummariesResponse>
 - **XML Documentation**: Full IntelliSense support with XML documentation
 - **Nullable Reference Types**: Proper null handling with nullable reference types
 - **Steam API Compatible**: Models match Steam Web API response structures
+- **Unix Timestamps**: Timestamp fields use `ulong` to match Steam API format, epoch seconds
 - **Cross-Platform**: Works on .NET 8+ on any platform
 - **No Dependencies**: Zero external dependencies for maximum compatibility
 

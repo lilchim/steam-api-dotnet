@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using SteamApi.Client.Configuration;
 using SteamApi.Models.Steam.Responses;
+using SteamApi.Models.Steam.Store;
 using SteamApi.Models.Status;
 using System.Text.Json;
 
@@ -132,6 +133,19 @@ public class SteamApiClient : ISteamApiClient
     public async Task<SteamResponse<AppListResponse>> GetAppListAsync(CancellationToken cancellationToken = default)
     {
         return await GetAsync<SteamResponse<AppListResponse>>("/api/steamapps/list", cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Dictionary<string, StoreAppDetailsResponse>> GetStoreAppDetailsAsync(int appId, CancellationToken cancellationToken = default)
+    {
+        return await GetAsync<Dictionary<string, StoreAppDetailsResponse>>($"/api/steamstore/appdetails/{appId}", cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public async Task<Dictionary<string, StoreAppDetailsResponse>> GetStoreAppDetailsMultipleAsync(string appIds, CancellationToken cancellationToken = default)
+    {
+        var queryParams = new Dictionary<string, string> { ["appIds"] = appIds };
+        return await GetAsync<Dictionary<string, StoreAppDetailsResponse>>("/api/steamstore/appdetails", queryParams, cancellationToken);
     }
 
     private async Task<T> GetAsync<T>(string endpoint, CancellationToken cancellationToken = default)

@@ -27,4 +27,21 @@ public interface ISteamApiService
     /// <param name="parameters">Query parameters to include in the request</param>
     /// <returns>Deserialized response object</returns>
     Task<T> GetAsync<T>(string interfaceName, string methodName, string version, Dictionary<string, string>? parameters = null);
+    
+    /// <summary>
+    /// Makes a GET request to the Steam Store API
+    /// </summary>
+    /// <param name="endpoint">Store API endpoint (e.g., "appdetails")</param>
+    /// <param name="parameters">Query parameters to include in the request</param>
+    /// <returns>JSON response as string</returns>
+    Task<string> GetStoreAsync(string endpoint, Dictionary<string, string>? parameters = null);
+    
+    /// <summary>
+    /// Makes a GET request to the Steam Store API and deserializes the response
+    /// </summary>
+    /// <typeparam name="T">Type to deserialize the response to</typeparam>
+    /// <param name="endpoint">Store API endpoint</param>
+    /// <param name="parameters">Query parameters to include in the request</param>
+    /// <returns>Deserialized response object</returns>
+    Task<T> GetStoreAsync<T>(string endpoint, Dictionary<string, string>? parameters = null);
 } 
