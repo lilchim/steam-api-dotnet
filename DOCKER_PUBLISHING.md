@@ -55,10 +55,10 @@ You can also build and push manually:
 
 ```bash
 # Build the image
-docker build -f docker/steamapi.dockerfile -t yourusername/steam-api-dotnet:latest .
+docker build -f docker/steamapi.dockerfile -t lilchim/steam-api-dotnet:latest .
 
 # Push to Docker Hub
-docker push yourusername/steam-api-dotnet:latest
+docker push lilchim/steam-api-dotnet:latest
 ```
 
 ## Image Tags
