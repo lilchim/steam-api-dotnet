@@ -45,4 +45,38 @@ public class StoreRequirementsConverter : JsonConverter<StoreRequirements?>
             JsonSerializer.Serialize(writer, value, options);
         }
     }
+}
+
+/// <summary>
+/// Custom JSON converter for required_age that handles both string and integer values
+/// The Steam API can return required_age as either a string or integer
+/// </summary>
+public class RequiredAgeConverter : JsonConverter<int>
+{
+    public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        if (reader.TokenType == JsonTokenType.String)
+        {
+            var stringValue = reader.GetString();
+            if (int.TryParse(stringValue, out int result))
+            {
+                return result;
+            }
+            return 0; // Default to 0 if parsing fails
+        }
+
+        if (reader.TokenType == JsonTokenType.Number)
+        {
+            return reader.GetInt32();
+        }
+
+        // Return 0 for any other token types
+        reader.Skip();
+        return 0;
+    }
+
+    public override void Write(Utf8JsonWriter writer, int value, JsonSerializerOptions options)
+    {
+        writer.WriteNumberValue(value);
+    }
 } 
