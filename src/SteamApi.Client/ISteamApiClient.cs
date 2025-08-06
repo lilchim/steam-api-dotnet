@@ -92,6 +92,20 @@ public interface ISteamApiClient
     Task<SteamResponse<AchievementPercentagesResponse>> GetGlobalAchievementPercentagesForAppAsync(int gameId, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Get achievements for a specific user and game
+    /// </summary>
+    /// <param name="steamId">Steam ID of the user</param>
+    /// <param name="appId">Steam App ID</param>
+    /// <param name="language">Language for achievement names (optional)</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>User's achievements for the specified game</returns>
+    Task<SteamResponse<PlayerAchievementsResponse>> GetPlayerAchievementsAsync(
+        string steamId, 
+        int appId, 
+        string? language = null, 
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// Get a list of all Steam applications
     /// </summary>
     /// <param name="cancellationToken">Cancellation token</param>

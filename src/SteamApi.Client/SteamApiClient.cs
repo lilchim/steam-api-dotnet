@@ -130,6 +130,22 @@ public class SteamApiClient : ISteamApiClient
     }
 
     /// <inheritdoc/>
+    public async Task<SteamResponse<PlayerAchievementsResponse>> GetPlayerAchievementsAsync(
+        string steamId, 
+        int appId, 
+        string? language = null, 
+        CancellationToken cancellationToken = default)
+    {
+        var queryParams = new Dictionary<string, string>();
+        if (!string.IsNullOrEmpty(language))
+        {
+            queryParams["language"] = language;
+        }
+
+        return await GetAsync<SteamResponse<PlayerAchievementsResponse>>($"/api/steamuserstats/achievements/{steamId}/{appId}", queryParams, cancellationToken);
+    }
+
+    /// <inheritdoc/>
     public async Task<SteamResponse<AppListResponse>> GetAppListAsync(CancellationToken cancellationToken = default)
     {
         return await GetAsync<SteamResponse<AppListResponse>>("/api/steamapps/list", cancellationToken);
