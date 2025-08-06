@@ -89,6 +89,59 @@ docker run -p 5000:80 -e "SteamApi__ApiKey=your-api-key" lilchim/steam-api-dotne
 services.AddSteamApiClient(configuration);
 ```
 
+## Troubleshooting
+
+### 403 Forbidden Errors
+
+If you're getting 403 Forbidden errors from the API, it's likely due to missing or invalid API key authentication. The Steam API service requires a valid API key to be sent in the `X-API-Key` header.
+
+**Common issues:**
+
+1. **Missing API Key**: Make sure you've configured the `ApiKey` property in your client options:
+   ```csharp
+   services.AddSteamApiClient(options =>
+   {
+       options.BaseUrl = "https://your-steam-api.com";
+       options.ApiKey = "your-actual-api-key"; // This is required!
+   });
+   ```
+
+2. **Invalid API Key**: Ensure the API key matches one of the valid keys configured in your Steam API service.
+
+3. **Configuration Issues**: If using configuration from `appsettings.json`, verify the API key is properly set:
+   ```json
+   {
+     "SteamApiClient": {
+       "BaseUrl": "https://your-steam-api.com",
+       "ApiKey": "your-actual-api-key"
+     }
+   }
+   ```
+
+4. **Environment Variables**: When using Docker, ensure the API key environment variable is set:
+   ```bash
+   docker run -p 5000:80 -e "SteamApi__ApiKey=your-actual-api-key" lilchim/steam-api-dotnet:latest
+   ```
+
+**Verification Steps:**
+
+1. Check that your API key is being sent by enabling logging:
+   ```csharp
+   services.AddSteamApiClient(options =>
+   {
+       options.BaseUrl = "https://your-steam-api.com";
+       options.ApiKey = "your-api-key";
+       options.EnableLogging = true; // This will log requests
+   });
+   ```
+
+2. Verify the API key works in Swagger UI by entering it in the API key field.
+
+3. Test with a simple HTTP client to confirm the API key is valid:
+   ```bash
+   curl -H "X-API-Key: your-api-key" https://your-steam-api.com/api/status
+   ```
+
 ## API Methods
 
 ### Player Information
@@ -115,9 +168,16 @@ var recentGames = await client.GetRecentlyPlayedGamesAsync("76561198000000000", 
 
 // Get game news
 var news = await client.GetNewsForAppAsync(730, count: 5); // Counter-Strike 2
+var newsItem = news.Response?.AppNews.NewsItems.FirstOrDefault();
+Console.WriteLine($"News: {newsItem?.Title}");
 
 // Get achievement percentages
 var achievements = await client.GetGlobalAchievementPercentagesForAppAsync(730);
+
+// Get player achievements for a specific game
+var playerAchievements = await client.GetPlayerAchievementsAsync("76561198000000000", 238960); // Path of Exile
+var achievement = playerAchievements.Response?.PlayerStats.Achievements.FirstOrDefault();
+Console.WriteLine($"Achievement: {achievement?.ApiName}, Achieved: {achievement?.Achieved == 1}");
 
 // Get app list
 var apps = await client.GetAppListAsync();

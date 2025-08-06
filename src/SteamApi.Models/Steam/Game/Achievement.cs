@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace SteamApi.Models.Steam.Game;
 
 /// <summary>
@@ -8,40 +10,18 @@ public class Achievement
     /// <summary>
     /// The API name of the achievement
     /// </summary>
+    [JsonPropertyName("apiname")]
     public string ApiName { get; set; } = string.Empty;
     
     /// <summary>
-    /// Whether the achievement has been achieved
+    /// Whether the achievement has been achieved (1 for achieved, 0 for not achieved)
     /// </summary>
-    public bool Achieved { get; set; }
-    
-    /// <summary>
-    /// The name of the achievement
-    /// </summary>
-    public string Name { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// The description of the achievement
-    /// </summary>
-    public string Description { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// The icon URL for the achievement (locked)
-    /// </summary>
-    public string Icon { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// The icon URL for the achievement (unlocked)
-    /// </summary>
-    public string IconGray { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// The global percentage of players who have achieved this
-    /// </summary>
-    public double GlobalPercentage { get; set; }
+    [JsonPropertyName("achieved")]
+    public int Achieved { get; set; }
     
     /// <summary>
     /// When the achievement was unlocked (if achieved) (Unix timestamp)
     /// </summary>
+    [JsonPropertyName("unlocktime")]
     public ulong UnlockTime { get; set; }
 } 

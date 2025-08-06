@@ -47,6 +47,7 @@ public class StoreAppDetails
     /// Required age to play
     /// </summary>
     [JsonPropertyName("required_age")]
+    [JsonConverter(typeof(RequiredAgeConverter))]
     public int RequiredAge { get; set; }
     
     /// <summary>
