@@ -127,4 +127,13 @@ public interface ISteamApiClient
     /// <param name="cancellationToken">Cancellation token</param>
     /// <returns>Detailed app information from the Steam store</returns>
     Task<Dictionary<string, StoreAppDetailsResponse>> GetStoreAppDetailsMultipleAsync(string appIds, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Resolve a Steam vanity URL to a Steam ID
+    /// </summary>
+    /// <param name="vanityUrl">The vanity URL to resolve (e.g., "pickleman" or full URL like "https://steamcommunity.com/id/pickleman")</param>
+    /// <param name="urlType">The type of vanity URL (1 for individual profile, 2 for group, default: 1)</param>
+    /// <param name="cancellationToken">Cancellation token</param>
+    /// <returns>Steam ID information for the vanity URL</returns>
+    Task<SteamResponse<VanityUrlResponse>> ResolveVanityUrlAsync(string vanityUrl, int urlType = 1, CancellationToken cancellationToken = default);
 } 
