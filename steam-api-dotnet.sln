@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamApi.Models", "src\Stea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamApi.Client", "src\SteamApi.Client\SteamApi.Client.csproj", "{2A75B8BC-B194-43CA-B1A1-025CF144DD52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SteamApi.Client.Tests", "SteamApi.Client.Tests\SteamApi.Client.Tests.csproj", "{C91E1B70-F0ED-4AE4-87EC-2928469B716E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,18 @@ Global
 		{2A75B8BC-B194-43CA-B1A1-025CF144DD52}.Release|x64.Build.0 = Release|Any CPU
 		{2A75B8BC-B194-43CA-B1A1-025CF144DD52}.Release|x86.ActiveCfg = Release|Any CPU
 		{2A75B8BC-B194-43CA-B1A1-025CF144DD52}.Release|x86.Build.0 = Release|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Debug|x64.Build.0 = Debug|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Debug|x86.Build.0 = Debug|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Release|x64.ActiveCfg = Release|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Release|x64.Build.0 = Release|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Release|x86.ActiveCfg = Release|Any CPU
+		{C91E1B70-F0ED-4AE4-87EC-2928469B716E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
