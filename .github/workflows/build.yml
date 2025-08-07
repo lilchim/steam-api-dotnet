@@ -22,11 +22,14 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       
+    - name: Clean
+      run: dotnet clean --configuration Release
+      
     - name: Build
       run: dotnet build --no-restore --configuration Release
       
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration Release --framework net8.0
       
     - name: Pack
       run: |

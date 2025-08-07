@@ -164,6 +164,52 @@ public class SteamApiClient : ISteamApiClient
         return await GetAsync<Dictionary<string, StoreAppDetailsResponse>>("/api/steamstore/appdetails", queryParams, cancellationToken);
     }
 
+    /// <inheritdoc/>
+    public async Task<SteamResponse<VanityUrlResponse>> ResolveVanityUrlAsync(string vanityUrl, int urlType = 1, CancellationToken cancellationToken = default)
+    {
+        // Extract the vanity URL from a full Steam Community URL if provided
+        var extractedVanityUrl = ExtractVanityUrlFromUrl(vanityUrl);
+        
+        var queryParams = new Dictionary<string, string>
+        {
+            ["urlType"] = urlType.ToString()
+        };
+
+        return await GetAsync<SteamResponse<VanityUrlResponse>>($"/api/steamuser/resolve/{extractedVanityUrl}", queryParams, cancellationToken);
+    }
+
+    /// <summary>
+    /// Extracts the vanity URL from a full Steam Community URL or returns the input if it's already a vanity URL
+    /// </summary>
+    /// <param name="input">The input which could be a full URL or just a vanity URL</param>
+    /// <returns>The extracted vanity URL</returns>
+    private static string ExtractVanityUrlFromUrl(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            throw new ArgumentException("Vanity URL cannot be null or empty", nameof(input));
+        }
+
+        // If it's already just a vanity URL (no slashes or dots), return it as-is
+        if (!input.Contains('/') && !input.Contains('.'))
+        {
+            return input;
+        }
+
+        // Try to parse as a Steam Community URL
+        if (input.Contains("steamcommunity.com/id/"))
+        {
+            var parts = input.Split(new[] { "steamcommunity.com/id/" }, StringSplitOptions.None);
+            if (parts.Length > 1)
+            {
+                var vanityUrl = parts[1].Split('/')[0]; 
+                return vanityUrl;
+            }
+        }
+
+        return input;
+    }
+
     private async Task<T> GetAsync<T>(string endpoint, CancellationToken cancellationToken = default)
     {
         return await GetAsync<T>(endpoint, null, cancellationToken);

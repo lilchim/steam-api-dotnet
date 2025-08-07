@@ -54,6 +54,67 @@ public class MyService
 }
 ```
 
+### Resolving Steam Vanity URLs
+
+The client can resolve Steam vanity URLs to Steam IDs, accepting either the vanity URL directly or a full Steam Community URL:
+
+```csharp
+// Resolve using just the vanity URL
+var result1 = await _steamClient.ResolveVanityUrlAsync("pickleman");
+Console.WriteLine($"Steam ID: {result1.Response?.SteamId}");
+
+// Resolve using a full Steam Community URL
+var result2 = await _steamClient.ResolveVanityUrlAsync("https://steamcommunity.com/id/pickleman");
+Console.WriteLine($"Steam ID: {result2.Response?.SteamId}");
+
+// Resolve a Steam group (urlType = 2)
+var groupResult = await _steamClient.ResolveVanityUrlAsync("valve", urlType: 2);
+Console.WriteLine($"Group ID: {groupResult.Response?.SteamId}");
+```
+
+### Complete Example
+
+Here's a complete example showing how to resolve a Steam vanity URL and then get player information:
+
+```csharp
+using SteamApi.Client;
+using SteamApi.Client.Extensions;
+
+// Setup
+var services = new ServiceCollection();
+services.AddSteamApiClient(options =>
+{
+    options.BaseUrl = "https://your-steam-api.com";
+    options.ApiKey = "your-api-key";
+});
+
+var serviceProvider = services.BuildServiceProvider();
+var steamClient = serviceProvider.GetRequiredService<ISteamApiClient>();
+
+// Resolve vanity URL to Steam ID
+var vanityResult = await steamClient.ResolveVanityUrlAsync("ac89");
+if (vanityResult.Response?.Success == 1)
+{
+    var steamId = vanityResult.Response.SteamId;
+    Console.WriteLine($"Resolved Steam ID: {steamId}");
+    
+    // Get player information using the resolved Steam ID
+    var playerInfo = await steamClient.GetPlayerSummariesAsync(steamId);
+    var player = playerInfo.Response?.Players.FirstOrDefault();
+    
+    if (player != null)
+    {
+        Console.WriteLine($"Player Name: {player.PersonaName}");
+        Console.WriteLine($"Profile URL: {player.ProfileUrl}");
+        Console.WriteLine($"Avatar: {player.Avatar}");
+    }
+}
+else
+{
+    Console.WriteLine($"Failed to resolve vanity URL: {vanityResult.Response?.Message}");
+}
+```
+
 ### Using with Docker
 
 If you're running the Steam API service in Docker:
